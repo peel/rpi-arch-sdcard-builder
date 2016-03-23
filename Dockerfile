@@ -1,13 +1,12 @@
-FROM pritunl/archlinux
+FROM phusion/baseimage
 
 ENV DISTRO_DOWNLOAD_URL="http://archlinuxarm.org/os/" DISTRO_FILE_NAME="ArchLinuxARM-rpi-2-latest.tar.gz"
 
 RUN mkdir /app
-ADD Makefile fdisk.sh /app/
+ADD Makefile /app/
 WORKDIR /app
 
-RUN pacman -Syu --noconfirm dosfstools parted make &&\
-    pacman -Sc --noconfirm
+RUN apt-get update && apt-get install -y dosfstools parted make && apt-get clean
 
 VOLUME /tmp/img
 

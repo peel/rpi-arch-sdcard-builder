@@ -1,0 +1,12 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  override:
+    - docker info
+    - docker build -t peelsky/rpi-tar-to-img .
+
+test:
+  post:
+    - docker run --privileged -v /app/img -t peelsky/rpi-tar-to-img
